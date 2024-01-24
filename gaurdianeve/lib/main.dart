@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'OnboardScreen/OnboardScreenState.dart';
+
 void main(){
-  runApp(MaterialApp(
-    home: Scaffold(
-      body: Center(
-        child: Text("Hello world"),
-      ),
-    ),
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+    home: OnboardScreen()
+
   ));
 }
