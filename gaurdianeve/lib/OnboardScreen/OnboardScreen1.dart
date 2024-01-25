@@ -10,29 +10,33 @@ class OnboardScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-     double width = MediaQuery.of(context).size.width;
-   double height = MediaQuery.of(context).size.height;
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return  Stack(
       children: [
         Positioned(
-          top: height/5,
-          left: width/2-150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(text: TextSpan(
-                children: [
-                  TextSpan(text: "Your Security",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 30.sp)),
-                  TextSpan(text: " Ally",style: GoogleFonts.caveat(color: teal,fontSize: 35.sp,fontWeight: FontWeight.w700)),
-                ]
-              )),
-              RichText(text: TextSpan(
-            children: [
-              TextSpan(text: "Gaurdian",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 30.sp)),
-              TextSpan(text: "Eve",style: GoogleFonts.caveat(color: teal,fontSize: 35.sp,fontWeight: FontWeight.w700)),
-            ]
-          ))
-            ],
+          top: height/6,
+          child: Padding(
+            padding:  EdgeInsets.symmetric(horizontal: width/6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(text: TextSpan(
+                  children: [
+                    TextSpan(text: "Your Security",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 30.sp,wordSpacing: -3,letterSpacing: -1)),
+                    TextSpan(text: " Ally",style: GoogleFonts.caveat(color: teal,fontSize: 35.sp,fontWeight: FontWeight.w700)),
+                  ]
+                )),
+                RichText(text: TextSpan(
+              children: [
+                TextSpan(text: "Gaurdian",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 32.sp,letterSpacing: 4)),
+                TextSpan(text: " Eve",style: GoogleFonts.caveat(color: teal,fontSize: 35.sp,fontWeight: FontWeight.w700,letterSpacing: 2)),
+              ]
+            ))
+              ],
+            ),
           ),
         ),
         
