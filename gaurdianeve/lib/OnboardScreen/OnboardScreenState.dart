@@ -40,7 +40,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
             top: isAuthenticationDialogShow ? -height : 0,
             height: height,
             width: width,
-            duration: Duration(milliseconds: 420),
+            duration: const Duration(milliseconds: 420),
             child: PageView.builder(
               controller: _pageController,
               itemCount: _onboardingPages.length,
@@ -64,16 +64,14 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   setState(() {
                     isAuthenticationDialogShow = true;
                   });
-                  Future.delayed(
-                    Duration(milliseconds: 800),
-                    (){
-                      customDialogBox(context,onChange:(value) => setState(() {
+                  Future.delayed(const Duration(milliseconds: 600), () {
+                    customDialogBox(
+                      context,
+                      onChange: (value) => setState(() {
                         isAuthenticationDialogShow = false;
-                      }),);
-                    }
-                    
-                  );
-                  
+                      }),
+                    );
+                  });
                 } else {
                   _pageController.nextPage(
                     duration: const Duration(milliseconds: 500),
@@ -91,13 +89,13 @@ class _OnboardScreenState extends State<OnboardScreen> {
             ),
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 240),
+            duration: const Duration(milliseconds: 240),
             right: width / 12,
             top: isAuthenticationDialogShow ? -50 : height / 12,
             child: TextButton(
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(6)),
+                        const EdgeInsets.all(6)),
                     backgroundColor: MaterialStateProperty.all(grey),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -119,38 +117,130 @@ class _OnboardScreenState extends State<OnboardScreen> {
         ],
       ),
       backgroundColor: scaffoldBackgroundColor,
-    
     );
   }
 
-  Future<Object?> customDialogBox(BuildContext context,{required ValueChanged onChange}) {
-      double width = MediaQuery.of(context).size.width;
-      double height = MediaQuery.of(context).size.height;
+  Future<Object?> customDialogBox(BuildContext context,
+      {required ValueChanged onChange}) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     print(width);
     return showGeneralDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierLabel: "Sign In",
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return Center(
-                      child: Stack(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "Sign In",
+      pageBuilder: (_, animation, __) {
+        return Center(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: height / 1.832,
+                width: width / 1.256,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 26),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: 10,),
+                          Text(
+                            "Sign Up",
+                            style: GoogleFonts.poppins(fontSize: 24.sp),
+                          ),
+                          SizedBox(height: 25,),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              constraints: BoxConstraints(
+                                minHeight: 45,
+                                maxHeight: 45,
+                                maxWidth: 292,
+                                minWidth: 292
+                              ),
+                                hintText: 'username',
+                                hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w200, color: Colors.black,letterSpacing: 1,fontSize: 12.sp),
+                                filled: true,
+                                fillColor: Color(0xFFF7F7F7),
+                                suffixIcon: Icon(FontAwesomeIcons.user,color: Colors.black,size: 16,),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(13)))),
+                          ),
+                          SizedBox(height: 22,),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              constraints: BoxConstraints(
+                                minHeight: 45,
+                                maxHeight: 45,
+                                maxWidth: 292,
+                                minWidth: 292
+                              ),
+                                hintText: 'email',
+                                hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w200, color: Colors.black,letterSpacing: 1,fontSize: 12.sp),
+                                filled: true,
+                                fillColor: Color(0xFFF7F7F7),
+                                suffixIcon: Icon(FontAwesomeIcons.user,color: Colors.black,size: 16,),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(13)))),
+                          ),
+                          SizedBox(height: 22,),
+                         TextFormField(
+                            decoration: InputDecoration(
+                              constraints: BoxConstraints(
+                                minHeight: 45,
+                                maxHeight: 45,
+                                maxWidth: 292,
+                                minWidth: 292
+                              ),
+                                hintText: 'password',
+                                hintStyle: GoogleFonts.poppins(fontWeight: FontWeight.w200, color: Colors.black,letterSpacing: 1,fontSize: 12.sp),
+                                filled: true,
+                                fillColor: Color(0xFFF7F7F7),
+                                suffixIcon: Icon(FontAwesomeIcons.user,color: Colors.black,size: 16,),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(13)))),
+                          ),
+                          SizedBox(height: 27,),
                           Container(
-                        
-                        height:height/1.832 ,
-                        width:width/1.256,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20))
-
-                        ),
-                        
-
-                      )
-                        ],
-                      ),
-                    );
-                  },
-                ).then(onChange);
+                            height: 45,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: pink,
+                               borderRadius:
+                                        BorderRadius.all(Radius.circular(12))
+                                          
+                            ),
+                            child: Center(child: Text("Login", style: GoogleFonts.poppins(fontSize: 18.sp,color: Colors.white,fontWeight: FontWeight.w300),)),
+                          )
+                        ]),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: height / 2 + 16,
+                left: (width / 1.2) / 2 - 30,
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    FontAwesomeIcons.x,
+                    color: Colors.black,
+                    size: 14,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    ).then(onChange);
   }
 }
