@@ -31,7 +31,7 @@ class OnboardScreen1 extends StatelessWidget {
                 )),
                 RichText(text: TextSpan(
               children: [
-                TextSpan(text: "Gaurdian",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 32.sp,letterSpacing: 4)),
+                TextSpan(text: "Gaurdian",style: GoogleFonts.getFont("Montserrat",color: Colors.black,fontWeight:FontWeight.w700,fontSize: 36.sp,letterSpacing: 1.4)),
                 TextSpan(text: " Eve",style: GoogleFonts.caveat(color: teal,fontSize: 35.sp,fontWeight: FontWeight.w700,letterSpacing: 2)),
               ]
             ))

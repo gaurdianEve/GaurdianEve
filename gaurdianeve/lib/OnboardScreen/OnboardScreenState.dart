@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gaurdianeve/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'OnboardScreen1.dart';
 import 'OnboardScreen2.dart';
 import 'OnboardScreen3.dart';
@@ -13,58 +17,107 @@ class OnboardScreen extends StatefulWidget {
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentPage = 0;
-  
+  bool isAuthenticationDialogShow = false;
 
-  List<Widget> _onboardingPages = [
-    
-   OnboardScreen1(),
-   OnboardScreen2(),
-   OnboardScreen3()
-    
+  final List<Widget> _onboardingPages = [
+    const OnboardScreen1(),
+    const OnboardScreen2(),
+    const OnboardScreen3()
   ];
   @override
   Widget build(BuildContext context) {
-   double width = MediaQuery.of(context).size.width;
-   double height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context);
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
-          PageView.builder(
+          AnimatedPositioned(
+            top: isAuthenticationDialogShow?-50:0,
+            height: height,
+            width: width,
+            duration: Duration(milliseconds: 240),
+            child: PageView.builder(
               controller: _pageController,
-            itemCount: _onboardingPages.length,
-            onPageChanged: (int page) {
-              setState(() {
-                _currentPage = page;
-              });
-            },
-            itemBuilder: (context, index) {
-              return _onboardingPages[index];
-            },
-            ),
-          Positioned(
-            left: width/2-32,
-            bottom: height/7,
-            
-            child: GestureDetector(
-              onTap: (){
-                _pageController.nextPage(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
+              itemCount: _onboardingPages.length,
+              onPageChanged: (int page) {
+               
+                setState(() {
+                  _currentPage = page;
+                });
               },
-              child: CircleAvatar(
-              radius: 32,
-              backgroundColor: teal,
-              child: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,)
-                      ),
-            ))
+              itemBuilder: (context, index) {
+                return _onboardingPages[index];
+              },
+            ),
+          ),
+          Positioned(
+            left: width / 2 - 32,
+            bottom: height / 7,
+            child: GestureDetector(
+              onTap: () {
+                if (_currentPage==_onboardingPages.length-1 ) {
+                  setState(() {
+                    isAuthenticationDialogShow!= isAuthenticationDialogShow;
+                  });
+                    
+                  }
+                  else{
+                     _pageController.nextPage(
+                  duration: const  Duration(milliseconds: 500),
+                  curve: Curves.easeInCubic,
+                );
+                    
+                  }
+               
+              },
+              child: const CircleAvatar(
+                  radius: 32,
+                  backgroundColor: teal,
+                  child: Icon(
+                    FontAwesomeIcons.arrowRight,
+                    color: Colors.white,
+                  )),
+            ),
+          ),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 240),
+            right: width/12,
+            top: isAuthenticationDialogShow?-50:height/12,
+            child: TextButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(6)),
+                  backgroundColor: MaterialStateProperty.all(grey),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+              
+            )
+                  )
+                ),
+                onPressed: (){
+                  
+                  setState(() {
+                   
+                    _pageController.jumpTo(width*(_onboardingPages.length-_currentPage));
+                    
+                  });
+                  
+
+                },
+                child:  Text(
+                  "Skip",
+                  style: GoogleFonts.poppins(color: Colors.white,fontWeight:FontWeight.w300,letterSpacing: 1,fontSize: 16.sp)
+                )
+              ),
+          ),
         ],
       ),
       backgroundColor: scaffoldBackgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      
     );
   }
 }
