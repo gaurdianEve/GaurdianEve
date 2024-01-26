@@ -3,6 +3,7 @@ import 'package:gaurdianeve/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'OnboardScreen1.dart';
 import 'OnboardScreen2.dart';
+import 'OnboardScreen3.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -18,7 +19,9 @@ class _OnboardScreenState extends State<OnboardScreen> {
 
   List<Widget> _onboardingPages = [
     
-   OnboardScreen2()
+   OnboardScreen1(),
+   OnboardScreen2(),
+   OnboardScreen3()
     
   ];
   @override
@@ -44,11 +47,19 @@ class _OnboardScreenState extends State<OnboardScreen> {
             left: width/2-32,
             bottom: height/7,
             
-            child: CircleAvatar(
-            radius: 32,
-            backgroundColor: teal,
-            child: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,)
-          ))
+            child: GestureDetector(
+              onTap: (){
+                _pageController.nextPage(
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+              },
+              child: CircleAvatar(
+              radius: 32,
+              backgroundColor: teal,
+              child: Icon(FontAwesomeIcons.arrowRight, color: Colors.white,)
+                      ),
+            ))
         ],
       ),
       backgroundColor: scaffoldBackgroundColor,
