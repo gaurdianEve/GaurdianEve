@@ -41,6 +41,7 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_screenutil: 
   bloc: ^8.1.2
+  firebase_auth: ^4.16.0
 
 
 dev_dependencies:
