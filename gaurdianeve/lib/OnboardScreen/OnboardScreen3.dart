@@ -23,6 +23,7 @@ class OnboardScreen3 extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: width / 6 - 10),
             child: Column(
+              
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
