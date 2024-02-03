@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaurdianeve/Pages/mainScreen.dart';
 import 'OnboardScreen/OnboardScreenState.dart';
 import 'firebase_options.dart';
 
@@ -9,7 +11,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-    runApp(const MyApp());
+  runApp( BlocProvider(
+    create: (context) => AuthBLocBloc(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +22,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: OnboardScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const MainScreen(),
+    );
   }
 }

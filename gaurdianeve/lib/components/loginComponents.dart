@@ -1,14 +1,16 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
 class LoginComponent extends StatelessWidget {
-  const LoginComponent({
+   LoginComponent({
     super.key,
     required this.height,
     required this.width,
@@ -17,6 +19,12 @@ class LoginComponent extends StatelessWidget {
 
   final double height;
   final double width;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+// Add a GlobalKey for Form
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
   final void Function()? onTap;
 
   @override
@@ -43,6 +51,18 @@ class LoginComponent extends StatelessWidget {
                 
                 
                 TextFormField(
+                  controller: emailController,
+                  focusNode: _emailFocus,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordFocus);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    // Add additional email validation if needed
+                    return null;
+                  },
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(
@@ -66,6 +86,15 @@ class LoginComponent extends StatelessWidget {
                 ),
                 const SizedBox(height: 31,),
                TextFormField(
+                controller: passwordController,
+                  focusNode: _passwordFocus,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    // Add additional password validation if needed
+                    return null;
+                  },
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(
@@ -87,16 +116,28 @@ class LoginComponent extends StatelessWidget {
                               BorderRadius.all(Radius.circular(13)))),
                 ),
                 const SizedBox(height: 27,),
-                Container(
-                  height: 45,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: pink,
-                     borderRadius:
-                              BorderRadius.all(Radius.circular(12))
-                                
+                GestureDetector(
+                  onTap: () {
+                  
+                    BlocProvider.of<AuthBLocBloc>(context).add(
+                      LoginEvent(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      ),
+                    );
+                  
+                },
+                  child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: pink,
+                       borderRadius:
+                                BorderRadius.all(Radius.circular(12))
+                                  
+                    ),
+                    child: Center(child: Text("Sign In", style: GoogleFonts.poppins(fontSize: 18.sp,color: Colors.white,fontWeight: FontWeight.w400),)),
                   ),
-                  child: Center(child: Text("Sign In", style: GoogleFonts.poppins(fontSize: 18.sp,color: Colors.white,fontWeight: FontWeight.w400),)),
                 ),
                 SizedBox(height: 5,),
                 GestureDetector(
