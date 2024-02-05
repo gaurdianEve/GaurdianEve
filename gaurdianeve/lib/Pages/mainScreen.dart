@@ -12,18 +12,6 @@ class MainScreen extends StatelessWidget {
     return BlocBuilder<AuthBLocBloc, AuthBLocState>(
       
       builder: (context, state) {
-        // if (state is Unauthenticated) {
-        //   return const OnboardScreen();
-        // }
-        // else if(state is Authenticated){
-        //   return HomeScreen(user: state.user);
-        // }
-        // else if(state is Loading){
-        //   return const  CircularProgressIndicator();
-        // }
-        // else{
-        //   return const Center(child: Text("Something went wrong"));
-        // }
         switch (state.runtimeType) {
           case Unauthenticated:{
             return const OnboardScreen();

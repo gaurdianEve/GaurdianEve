@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gaurdianeve/Authentication/AuthPage.dart';
@@ -62,7 +60,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 } else {
                   _pageController.nextPage(
                     duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInCubic,
+                    curve: Curves.easeInToLinear,
                   );
                 }
               },
