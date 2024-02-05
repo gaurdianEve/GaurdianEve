@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gaurdianeve/Authentication/AuthPage.dart';
@@ -55,12 +53,14 @@ class _OnboardScreenState extends State<OnboardScreen> {
               onTap: () {
                 print(height);
                 if (_currentPage == _onboardingPages.length - 1) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AuthPage()));
-                  
+                   Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AuthPage()),
+            );
                 } else {
                   _pageController.nextPage(
                     duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInCubic,
+                    curve: Curves.easeInToLinear,
                   );
                 }
               },
