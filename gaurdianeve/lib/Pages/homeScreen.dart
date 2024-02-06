@@ -4,14 +4,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaurdianeve/Pages/setting.dart';
 import 'package:gaurdianeve/model/user.dart';
 import '../components/appname.dart';
+import '../components/bottomnavigationTile.dart';
 import '../constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.user});
   final UserProfile user;
-
+  
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double aspectRatio = MediaQuery.of(context).size.aspectRatio;
     const ScreenUtilInit();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
@@ -46,6 +50,31 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Text(user.email),
       ),
+      bottomNavigationBar: SafeArea(child:
+      Container(
+        height: (height/8)*aspectRatio,
+        padding: const  EdgeInsets.symmetric(horizontal: 28,vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 20,horizontal: 32),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16))
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BottomNavigationTile(selectedSvgPath: "assets/images/selectedTile/fakecall.svg", svgPath: "assets/images/location.svg", isSelected: false,),
+            BottomNavigationTile(selectedSvgPath: "assets/images/selectedTile/location1.svg", svgPath: "assets/images/fakecall.svg", isSelected: true,),
+            BottomNavigationTile(selectedSvgPath: "assets/images/selectedTile/alert1.svg", svgPath: "assets/images/alert.svg", isSelected: true,),
+            BottomNavigationTile(selectedSvgPath: "assets/images/selectedTile/friend1.svg", svgPath: "assets/images/friend.svg", isSelected: false,),
+            BottomNavigationTile(selectedSvgPath: "assets/images/selectedTile/message1.svg", svgPath: "assets/images/message.svg", isSelected: true,),
+            
+
+            
+          ],
+        ),
+      )
+       ),
     );
   }
 }
+
