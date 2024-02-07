@@ -18,7 +18,7 @@ class BottomNavigationTile extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration:  BoxDecoration(
         color: isSelected? pink :Colors.transparent,
-        borderRadius: BorderRadius.all(Radius.circular(16))
+        borderRadius: const BorderRadius.all(Radius.circular(16))
       ),
       child: isSelected? SvgPicture.asset(selectedSvgPath): SvgPicture.asset(svgPath));
   }
