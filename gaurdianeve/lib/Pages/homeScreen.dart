@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurdianeve/Pages/fakecall.dart';
+import 'package:gaurdianeve/Pages/mapScreen.dart';
 import 'package:gaurdianeve/Pages/setting.dart';
 import 'package:gaurdianeve/model/user.dart';
 import '../components/appname.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double aspectRatio = MediaQuery.of(context).size.aspectRatio;
     List<Widget> _pages  = [
 
-      const Center(child: Text("location")),
+      const MapScreen(),
       const FakeCall(),
       const Center(child: Text("alert")),
       const Center(child: Text("friends")),
