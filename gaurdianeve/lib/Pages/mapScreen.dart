@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mappls_gl/mappls_gl.dart';
+import 'package:location/location.dart';
 
 import '../constants.dart';
 
@@ -13,16 +17,25 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  MapplsMapController? mapController;
+  Location _locationController = Location();
+  // double lat = 28.6445;
+  // double longi = 77.2326;
+  LatLng initialLocation = LatLng(28.6445, 77.2326);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     MapplsAccountManager.setMapSDKKey("c12cb8813de956f7d190e11764dbe137");
     MapplsAccountManager.setRestAPIKey("c12cb8813de956f7d190e11764dbe137");
     MapplsAccountManager.setAtlasClientId(
         "96dHZVzsAuvVj-nXAOwtjMFRihW7oT1iJ4VqMi3Ot4ytqtPiepg1zYx5t0SatLXFlqQr_HPlr5RJo4gnR93OKxDSOueXsUQn");
     MapplsAccountManager.setAtlasClientSecret(
         "lrFxI-iSEg82z_cr0iWw5RioEeZNLCAsd5WGzVwRv_f6iJ3rrYq1n6C_AiQAw6wi1Ad7wzNYChs7c6u1G_36AyBRQQboTEVkC4MYPnNQ1vk=");
+
+    getLocationUpdate();
   }
 
   @override
@@ -30,20 +43,28 @@ class _MapScreenState extends State<MapScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double aspectRatio = MediaQuery.of(context).size.aspectRatio;
+
     const ScreenUtilInit();
     return Stack(
       children: [
         Positioned(
-          top:0,
-          left: -10,
+          top: 6,
+          left: 0,
+          right: 0,
           child: Container(
-            height:(height/3.5)*aspectRatio,
+            height: (height / 3.5) * aspectRatio,
             width: width,
-            padding: const EdgeInsets.all(12),
-            margin: EdgeInsets.only(left: 30, right: 30, ),
+            padding: const EdgeInsets.all(18),
+            margin: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(24))),
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(24),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,7 +93,9 @@ class _MapScreenState extends State<MapScreen> {
                 Text(
                   "Share the RedZone location with you ",
                   style: GoogleFonts.poppins(
-                      color: grey, fontSize: 12.sp, fontWeight: FontWeight.w400),
+                      color: grey,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -80,22 +103,68 @@ class _MapScreenState extends State<MapScreen> {
         ),
         Container(
           margin:
-              const EdgeInsets.only(left: 30, right: 30, top: 150, bottom: 10),
+              const EdgeInsets.only(left: 20, right: 20, top: 150, bottom: 10),
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
           child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(26)),
-            child: Expanded(
-              child: MapplsMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(28.6445, 77.2326), // Delhi coordinates
-                  zoom: 14.0,
-                ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(26),
+            ),
+            child: MapplsMap(
+              onMapCreated: (controller) {
+                mapController = controller;
+              },
+              initialCameraPosition: CameraPosition(
+                target: initialLocation, // Delhi coordinates
+                zoom: 14.0,
               ),
+              myLocationEnabled: true,
+              trackCameraPosition: true,
+              myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+             
+              onStyleLoadedCallback: () async {
+               Future.delayed(Duration(milliseconds: 3000));
+               addMarker();
+               //print(initialLocation);
+
+              },
             ),
           ),
         ),
       ],
     );
+  }
+
+  Future<void> getLocationUpdate() async {
+    bool _serviceEnable;
+    PermissionStatus _permissionGranted;
+    _serviceEnable = await _locationController.serviceEnabled();
+    if (_serviceEnable) {
+      _serviceEnable = await _locationController.requestService();
+    } else {
+      return;
+    }
+    _permissionGranted = await _locationController.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+  }
+
+  Future<void> addImageFromAsset(String name, String assetName) async {
+    final ByteData bytes = await rootBundle.load(assetName);
+    final Uint8List list = bytes.buffer.asUint8List();
+    return mapController?.addImage(name, list);
+  }
+
+  void addMarker() async {
+    await addImageFromAsset("icon", "assets/images/person1.png");
+    mapController?.addSymbol(
+        SymbolOptions(geometry: initialLocation, iconImage: "icon"));
   }
 }
