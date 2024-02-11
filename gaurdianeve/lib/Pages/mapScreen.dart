@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,8 +37,8 @@ class _MapScreenState extends State<MapScreen> {
         "96dHZVzsAuvVj-nXAOwtjMFRihW7oT1iJ4VqMi3Ot4ytqtPiepg1zYx5t0SatLXFlqQr_HPlr5RJo4gnR93OKxDSOueXsUQn");
     MapplsAccountManager.setAtlasClientSecret(
         "lrFxI-iSEg82z_cr0iWw5RioEeZNLCAsd5WGzVwRv_f6iJ3rrYq1n6C_AiQAw6wi1Ad7wzNYChs7c6u1G_36AyBRQQboTEVkC4MYPnNQ1vk=");
-
     getLocationUpdate();
+
   }
 
   @override
@@ -116,21 +119,17 @@ class _MapScreenState extends State<MapScreen> {
             child: MapplsMap(
               onMapCreated: (controller) {
                 mapController = controller;
+
+                
               },
               initialCameraPosition: CameraPosition(
                 target: initialLocation, // Delhi coordinates
                 zoom: 14.0,
               ),
-              myLocationEnabled: true,
-              trackCameraPosition: true,
-              myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+              myLocationEnabled: true,              
+              myLocationRenderMode: MyLocationRenderMode.NORMAL,
+             
               
-              onStyleLoadedCallback: () async {
-               
-               addMarker();
-               //print(initialLocation);
-
-              },
             ),
           ),
         ),
@@ -154,17 +153,40 @@ class _MapScreenState extends State<MapScreen> {
         return;
       }
     }
+    _locationController.onLocationChanged.listen((location) {
+      if (location.latitude!=null && location.longitude!=null) {
+        setState(() {
+          mapController?.clearSymbols();
+          initialLocation = LatLng(location.latitude!, location.longitude!);
+          mapController?.animateCamera(CameraUpdate.newLatLng(initialLocation));
+          addMarker();
+        });
+      }
+      
+    });
   }
 
   Future<void> addImageFromAsset(String name, String assetName) async {
     final ByteData bytes = await rootBundle.load(assetName);
     final Uint8List list = bytes.buffer.asUint8List();
-    return mapController?.addImage(name, list);
+    return mapController?.addImage(name, list,);
   }
+ 
 
   void addMarker() async {
     await addImageFromAsset("icon", "assets/images/person1.png");
     mapController?.addSymbol(
-        SymbolOptions(geometry: initialLocation, iconImage: "icon"));
+        SymbolOptions(geometry: initialLocation, zIndex: 0));
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+   
+    
+    super.dispose();
+    
+   
+
   }
 }
