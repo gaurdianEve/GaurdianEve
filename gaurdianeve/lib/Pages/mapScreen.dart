@@ -124,9 +124,9 @@ class _MapScreenState extends State<MapScreen> {
               myLocationEnabled: true,
               trackCameraPosition: true,
               myLocationTrackingMode: MyLocationTrackingMode.Tracking,
-             
+              
               onStyleLoadedCallback: () async {
-               Future.delayed(Duration(milliseconds: 3000));
+               
                addMarker();
                //print(initialLocation);
 
