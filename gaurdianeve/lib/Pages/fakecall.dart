@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaurdianeve/Pages/callScreen.dart';
 import 'package:gaurdianeve/components/fakeCallContact.dart';
 
 import '../components/fakecallContainer.dart';
@@ -17,7 +18,14 @@ class FakeCall extends StatelessWidget {
         // AnimatedContainer(duration: Duration(),child:
         // ),
         FakeCallInstructionContainer(),
-        FakeCallContactContainer()
+        GestureDetector(
+          onTap: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CallScreen()),
+              );
+          },
+          child: FakeCallContactContainer())
       ],
     );
   }

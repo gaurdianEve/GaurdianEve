@@ -7,3 +7,5 @@ const pink = Color(0xFFFF597D);
 const grey = Color(0xFF79777A);
 const circleAvatarColor = Color(0x2FFF597D);
 const containerColor = Color(0xFF4A464A);
+const whiteD = Color(0xFFFFFFF0);
+const blackD = Color(0xFF171717);

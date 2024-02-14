@@ -1,7 +1,3 @@
-import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -119,8 +115,6 @@ class _MapScreenState extends State<MapScreen> {
             child: MapplsMap(
               onMapCreated: (controller) {
                 mapController = controller;
-
-                
               },
               initialCameraPosition: CameraPosition(
                 target: initialLocation, // Delhi coordinates
@@ -155,12 +149,15 @@ class _MapScreenState extends State<MapScreen> {
     }
     _locationController.onLocationChanged.listen((location) {
       if (location.latitude!=null && location.longitude!=null) {
-        setState(() {
+        if (mounted) {
+          setState(() {
           mapController?.clearSymbols();
           initialLocation = LatLng(location.latitude!, location.longitude!);
           mapController?.animateCamera(CameraUpdate.newLatLng(initialLocation));
           addMarker();
         });
+          
+        }
       }
       
     });
@@ -178,15 +175,5 @@ class _MapScreenState extends State<MapScreen> {
     mapController?.addSymbol(
         SymbolOptions(geometry: initialLocation, zIndex: 0));
   }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-
-   
-    
-    super.dispose();
-    
-   
-
-  }
+  
 }
