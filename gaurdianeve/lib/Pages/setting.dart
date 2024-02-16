@@ -24,11 +24,16 @@ class Setting extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: const Padding(
+          leading:  Padding(
             padding: EdgeInsets.only(left: 16),
-            child: Icon(
-              FontAwesomeIcons.chevronLeft,
-              color: grey,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Icon(
+                FontAwesomeIcons.chevronLeft,
+                color: grey,
+              ),
             ),
           ),
         ),
@@ -47,7 +52,7 @@ class Setting extends StatelessWidget {
           borderRadius: BorderRadius.circular(18)),
                 child: ListView(children:  [
 
-                  Divider(height: 10 ,thickness: 0,color: Colors.white,),
+                   const Divider(height: 10 ,thickness: 0,color: Colors.white,),
                    const Option(asset: "assets/images/headset.svg", name: "Help and Services"),
                     Divider(height: settingContainerHeight/14 ,color: Colors.grey.shade400,thickness: 0,),
                    const Option(asset: "assets/images/feedback.svg", name: "Feedback"),
