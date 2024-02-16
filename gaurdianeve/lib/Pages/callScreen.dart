@@ -8,13 +8,16 @@ class CallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return Scaffold(
       backgroundColor: blackD,
       body: SafeArea(
         child: Column(
 
           children: [
-            const SizedBox(height: 100,),
+             SizedBox(height: height/16,),
              Text(
               "00:00",
               textDirection: TextDirection.ltr,
@@ -24,7 +27,7 @@ class CallScreen extends StatelessWidget {
                 color: Colors.white
               ),
             ),
-            const SizedBox(height: 8,),
+             SizedBox(height: (height/20)*aspectRatio,),
              CircleAvatar(
               backgroundColor: Colors.amber,
               radius: 40.sp,
@@ -32,7 +35,7 @@ class CallScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10,),
             const Text(
-              "DAD",
+              "MOM",
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 decoration: TextDecoration.none,
@@ -46,9 +49,9 @@ class CallScreen extends StatelessWidget {
               textDirection: TextDirection.ltr,
               style: TextStyle(decoration: TextDecoration.none, fontSize: 16.0,color: Colors.white),
             ),
-            const SizedBox(height: 100,),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60),
+             SizedBox(height: height/12,),
+             Padding(
+              padding: EdgeInsets.symmetric(horizontal: width/8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -68,8 +71,8 @@ class CallScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30,),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60),
+             Padding(
+              padding:  EdgeInsets.symmetric(horizontal: width/8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -88,7 +91,7 @@ class CallScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 60,),
+             SizedBox(height: height/16,),
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);

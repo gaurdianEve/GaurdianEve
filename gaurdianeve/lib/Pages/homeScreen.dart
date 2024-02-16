@@ -8,6 +8,7 @@ import 'package:gaurdianeve/model/user.dart';
 import '../components/appname.dart';
 import '../components/bottomnavigationTile.dart';
 import '../constants.dart';
+import 'addingGeoLocation.dart';
 
 class HomeScreen extends StatefulWidget {
    HomeScreen({super.key, required this.user});
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Setting()),
+                MaterialPageRoute(builder: (context) =>  AddRedzoneScreen()),
               );
             },
             child: CircleAvatar(
@@ -84,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   widget._currentPageIndex = 0;
                 });
                 print(widget._currentPageIndex);              },
-              child: BottomNavigationTile(
+              child: const BottomNavigationTile(
                 selectedSvgPath: "assets/images/location1.svg",
                 svgPath: "assets/images/location.svg",
                 isSelected: true,
@@ -97,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 print(widget._currentPageIndex);  
               },
-              child: BottomNavigationTile(
+              child: const BottomNavigationTile(
                 selectedSvgPath: "assets/images/fakecall1.svg",
                 svgPath: "assets/images/fakecall.svg",
                 isSelected: false,
@@ -110,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 print(widget._currentPageIndex);  
               },
+              // ignore: prefer_const_constructors
               child: BottomNavigationTile(
                 selectedSvgPath: "assets/images/alert.svg",
                 svgPath: "assets/images/alert1.svg",
@@ -123,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 print(widget._currentPageIndex);  
               },
-              child: BottomNavigationTile(
+              child: const BottomNavigationTile(
                 selectedSvgPath: "assets/images/friend1.svg",
                 svgPath: "assets/images/friend.svg",
                 isSelected: false,
@@ -136,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 print(widget._currentPageIndex);  
               },
-              child: BottomNavigationTile(
+              child: const BottomNavigationTile(
                 selectedSvgPath: "assets/images/message1.svg",
                 svgPath: "assets/images/message.svg",
                 isSelected: false,

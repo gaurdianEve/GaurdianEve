@@ -17,7 +17,7 @@ class FakeCall extends StatelessWidget {
       children: [
         // AnimatedContainer(duration: Duration(),child:
         // ),
-        FakeCallInstructionContainer(),
+        const FakeCallInstructionContainer(),
         GestureDetector(
           onTap: (){
             Navigator.push(
@@ -25,7 +25,7 @@ class FakeCall extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const CallScreen()),
               );
           },
-          child: FakeCallContactContainer())
+          child: const FakeCallContactContainer())
       ],
     );
   }
