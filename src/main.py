@@ -1,37 +1,34 @@
-from appwrite.client import Client
-import os
+import firebase_admin
+from firebase_admin import messaging
 
+# Initialize the Firebase Admin SDK
+cred = firebase_admin.credentials.Certificate('gaurdianeve-bf78e-46ff6ce0beb9.json')
+firebase_admin.initialize_app(cred)
 
-# This is your Appwrite function
-# It's executed each time we get a request
-def main(context):
-    # Why not try the Appwrite SDK?
-    #
-    # client = (
-    #     Client()
-    #     .set_endpoint("https://cloud.appwrite.io/v1")
-    #     .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
-    #     .set_key(os.environ["APPWRITE_API_KEY"])
-    # )
+def send_notification(token, title, body):
+  """Sends a notification message to the specified device token.
 
-    # You can log messages to the console
-    context.log("Hello, Logs!")
+  Args:
+    token: The recipient's device token.
+    title: The title of the notification.
+    body: The body of the notification.
+  """
 
-    # If something goes wrong, log an error
-    context.error("Hello, Errors!")
+  message = messaging.Message(
+      data={
+          "title": title,
+          "body": body
+      },
+      token=token)
 
-    # The `ctx.req` object contains the request data
-    if context.req.method == "GET":
-        # Send a response with the res object helpers
-        # `ctx.res.send()` dispatches a string back to the client
-        return context.res.send("Hello, World!")
+  try:
+      response = messaging.send(message)
+      print('Message sent successfully:', response)
+  except Exception as e:
+      print('Error sending message:', e)
 
-    # `ctx.res.json()` is a handy helper for sending JSON
-    return context.res.json(
-        {
-            "motto": "Build like a team of hundreds_",
-            "learn": "https://appwrite.io/docs",
-            "connect": "https://appwrite.io/discord",
-            "getInspired": "https://builtwith.appwrite.io",
-        }
-    )
+# Example usage
+token = "your_recipient_device_token"
+title = "My Notification Title"
+body = "This is the message body"
+send_notification(token, title, body)

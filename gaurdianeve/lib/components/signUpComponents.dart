@@ -39,7 +39,7 @@ class SignUpComponent extends StatelessWidget {
                   style: GoogleFonts.poppins(fontSize: 24.sp),
                 ),
                 const SizedBox(height: 25,),
-                TextFormField(
+                TextField(
                   enabled: true,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
@@ -66,7 +66,7 @@ class SignUpComponent extends StatelessWidget {
                               BorderRadius.all(Radius.circular(13)))),
                 ),
                 const SizedBox(height: 22,),
-                TextFormField(
+                TextField(
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(
@@ -89,7 +89,7 @@ class SignUpComponent extends StatelessWidget {
                               BorderRadius.all(Radius.circular(13)))),
                 ),
                 const SizedBox(height: 22,),
-               TextFormField(
+               TextField(
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(

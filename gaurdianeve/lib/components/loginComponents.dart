@@ -50,19 +50,8 @@ class LoginComponent extends StatelessWidget {
                 const SizedBox(height: 25,),
                 
                 
-                TextFormField(
+                TextField(
                   controller: emailController,
-                  focusNode: _emailFocus,
-                  onEditingComplete: () {
-                    FocusScope.of(context).requestFocus(_passwordFocus);
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    // Add additional email validation if needed
-                    return null;
-                  },
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(
@@ -85,16 +74,10 @@ class LoginComponent extends StatelessWidget {
                               BorderRadius.all(Radius.circular(13)))),
                 ),
                 const SizedBox(height: 31,),
-               TextFormField(
+               TextField(
                 controller: passwordController,
-                  focusNode: _passwordFocus,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    // Add additional password validation if needed
-                    return null;
-                  },
+                  
+                  
                   decoration: InputDecoration(
                      contentPadding: const EdgeInsets.symmetric(vertical: 2,horizontal: 10),
                     constraints: const BoxConstraints(

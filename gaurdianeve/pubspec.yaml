@@ -48,10 +48,12 @@ dependencies:
   flutter_native_splash:
   mappls_gl:
   location: 
+  awesome_notifications:
+  
 
 flutter_native_splash:
   android: true
-  color: '#FFFFFF'
+  color: '#FFFFF0'
   image: "assets/images/splash.png"
 
 dev_dependencies:

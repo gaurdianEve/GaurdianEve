@@ -1,12 +1,32 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class AddRedzoneScreen extends StatefulWidget {
+  @override
+  State<AddRedzoneScreen> createState() => _AddRedzoneScreenState();
+}
 
-class AddRedzoneScreen extends StatelessWidget {
+class _AddRedzoneScreenState extends State<AddRedzoneScreen> {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController latitudeController = TextEditingController();
+
   final TextEditingController longitudeController = TextEditingController();
+
   final TextEditingController radiusController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+      if(!isAllowed){
+        AwesomeNotifications().requestPermissionToSendNotifications()
+
+      }
+    });
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,38 +40,39 @@ class AddRedzoneScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration:const InputDecoration(labelText: 'Name'),
               controller: nameController,
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Latitude'),
+              decoration: const InputDecoration(labelText: 'Latitude'),
               controller: latitudeController,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Longitude'),
+              decoration: const InputDecoration(labelText: 'Longitude'),
               controller: longitudeController,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Radius'),
+              decoration: const InputDecoration(labelText: 'Radius'),
               controller: radiusController,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                addRedzone(
-                  nameController.text,
-                  double.tryParse(latitudeController.text) ?? 0.0,
-                  double.tryParse(longitudeController.text) ?? 0.0,
-                  double.tryParse(radiusController.text) ?? 0.0,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Redzone added'),
-                ));
+                // addRedzone(
+                //   nameController.text,
+                //   double.tryParse(latitudeController.text) ?? 0.0,
+                //   double.tryParse(longitudeController.text) ?? 0.0,
+                //   double.tryParse(radiusController.text) ?? 0.0,
+                // );
+                // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                //   content: Text('Redzone added'),
+                // ));
+                triggerNotification();
               },
-              child: Text('Add Redzone'),
+              child: const Text('Add Redzone'),
             ),
           ],
         ),
@@ -68,5 +89,16 @@ class AddRedzoneScreen extends StatelessWidget {
       },
       'radius': radius,
     });
+  }
+  triggerNotification(){
+    AwesomeNotifications().createNotification(
+  content: NotificationContent(
+      id: 10,
+      channelKey: 'basic_channel',
+      actionType: ActionType.Default,
+      title: 'Hello World!',
+      body: 'This is my first notification!',
+  )
+);
   }
 }
