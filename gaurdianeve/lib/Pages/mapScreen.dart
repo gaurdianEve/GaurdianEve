@@ -1,6 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gaurdianeve/service/calculateDistance.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mappls_gl/mappls_gl.dart';
 import 'package:location/location.dart';
@@ -21,6 +23,7 @@ class _MapScreenState extends State<MapScreen> {
   // double longi = 77.2326;
   LatLng initialLocation = LatLng(28.6445, 77.2326);
   Set<CircleOptions> redzoneCircles = {};
+  bool firstNotification = true;
 
   @override
   void initState() {
@@ -33,6 +36,12 @@ class _MapScreenState extends State<MapScreen> {
     MapplsAccountManager.setAtlasClientSecret(
         "lrFxI-iSEg82z_cr0iWw5RioEeZNLCAsd5WGzVwRv_f6iJ3rrYq1n6C_AiQAw6wi1Ad7wzNYChs7c6u1G_36AyBRQQboTEVkC4MYPnNQ1vk=");
     getLocationUpdate();
+     AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+      if(!isAllowed){
+        AwesomeNotifications().requestPermissionToSendNotifications()
+
+      }
+    });
   }
 
   @override
@@ -149,11 +158,12 @@ class _MapScreenState extends State<MapScreen> {
         if (mounted) {
           mapController?.clearSymbols();
           mapController?.clearCircles();
+
           setState(() {
             initialLocation = LatLng(location.latitude!, location.longitude!);
             mapController
                 ?.animateCamera(CameraUpdate.newLatLng(initialLocation));
-           
+
             addMarker();
             fetchRedzones();
           });
@@ -163,30 +173,40 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> fetchRedzones() async {
-  final redzones = await FirebaseFirestore.instance.collection('redzones').get();
-  for (var doc in redzones.docs) {
-    final data = doc.data();
-    final center = LatLng(data['position']['latitude'], data['position']['longitude']);
-    final radius = data['radius'] as double;
-    final CircleOptions circle = CircleOptions(
-        circleRadius: 100,
-        circleColor: "red",
-        geometry: center,
-        circleStrokeWidth: 0.1,
-        circleOpacity: 0.2);
-    if (!redzoneCircles.contains(circle)) {
-      redzoneCircles.add(circle);
-      mapController?.addCircle(circle);
+    final redzones =
+        await FirebaseFirestore.instance.collection('redzones').get();
+    for (var doc in redzones.docs) {
+      final data = doc.data();
+      final center =
+          LatLng(data['position']['latitude'], data['position']['longitude']);
+      final radius = data['radius'] as double;
+      double distance = calculateDistance(initialLocation, center);
+      if (distance <= radius) {
+        print("alert");
+        if (firstNotification) {
+          triggerNotification();
+          
+          
+        }
+      }
+      final CircleOptions circle = CircleOptions(
+          circleRadius: radius*120,
+          circleColor: "red",
+          geometry: center,
+          circleStrokeWidth: 0.1,
+          circleOpacity: 0.2);
+      if (!redzoneCircles.contains(circle)) {
+        redzoneCircles.add(circle);
+        mapController?.addCircle(circle);
+      }
+      mapController?.addSymbol(SymbolOptions(
+          geometry: center,
+          textField: "alert",
+          textSize: 12,
+          textOffset: Offset(0, -4),
+          textColor: "red"));
     }
-    mapController?.addSymbol(SymbolOptions(
-        geometry: center,
-        textField: "alert",
-        textSize: 12,
-        textOffset: Offset(0, -4),
-        textColor: "red"));
   }
-}
-
 
   Future<void> addImageFromAsset(String name, String assetName) async {
     final ByteData bytes = await rootBundle.load(assetName);
@@ -201,5 +221,18 @@ class _MapScreenState extends State<MapScreen> {
     await addImageFromAsset("icon", "assets/images/person1.png");
     mapController?.addSymbol(
         SymbolOptions(geometry: initialLocation, zIndex: 2, iconImage: "icon"));
+  }
+
+  void triggerNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: 'basic_channel',
+        actionType: ActionType.Default,
+        title: 'Alert !',
+        body: 'User in RED ZONE!',
+      ),
+    );
+    
   }
 }

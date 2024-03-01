@@ -9,11 +9,12 @@ class UserCard extends StatelessWidget {
   const UserCard({
     super.key,
     required this.containerHeight,
-    required this.width,
+    required this.width, this.username,
   });
 
   final double containerHeight;
   final double width;
+  final username;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class UserCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    Text("Username",
+                    Text(username,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 18.sp

@@ -49,6 +49,8 @@ dependencies:
   mappls_gl:
   location: 
   awesome_notifications:
+  firebase_storage: ^11.6.0
+  loading_animation_widget:
   
 
 flutter_native_splash:

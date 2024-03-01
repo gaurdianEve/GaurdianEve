@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 import 'package:gaurdianeve/Pages/mainScreen.dart';
 
+import 'Invitation/bloc/inivite_bloc.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,14 +21,21 @@ void main() async {
             channelKey: 'basic_channel',
             channelName: 'Basic notifications',
             channelDescription: 'Notification channel for basic tests',
-            defaultColor: Color(0xFF9D50DD),
-            ledColor: Colors.white)
+        )
       ],
       debug: true);
-  runApp(BlocProvider(
-    create: (context) => AuthBLocBloc(),
-    child: const MyApp(),
-  ));
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBLocBloc>(
+          create: (context) => AuthBLocBloc(),
+        ),
+        BlocProvider<IniviteBloc>(
+          create: (context) => IniviteBloc(),
+        ),
+        // Add more BlocProviders as needed
+      ],
+      child: MyApp(),
+    ),);
 }
 
 class MyApp extends StatelessWidget {

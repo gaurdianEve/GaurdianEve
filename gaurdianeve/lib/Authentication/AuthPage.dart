@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
-
 import '../components/loginComponents.dart';
 import '../components/signUpComponents.dart';
 import '../constants.dart';
@@ -27,12 +26,20 @@ class _AuthPageState extends State<AuthPage> {
     void onTap() => setState(() {
           isLoginShowing = !isLoginShowing;
         });
-    void popScreen(){    
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+    void popScreen(BuildContext context) {
+      try {
+       WidgetsBinding.instance.addPostFrameCallback((_) {
       // Perform navigation after the build phase
       Navigator.pop(context);
     });
-}
+  } catch (e) {
+    
+    print("Error while popping screen: $e");
+    
+
+  }
+    }
+
     print(
         "AuthPage Build: AuthBLocBloc - ${BlocProvider.of<AuthBLocBloc>(context).state}");
     return Scaffold(
@@ -58,11 +65,15 @@ class _AuthPageState extends State<AuthPage> {
             )),
         BlocBuilder<AuthBLocBloc, AuthBLocState>(
           builder: (context, state) {
-            
-             if(state is Authenticated){
-              popScreen();
+
+            if (state is Authenticated) {
+              
+                Future.delayed(Duration(milliseconds: 1000),()=>{
+                  popScreen(context)
+                });
+             
             }
-            return  Center(
+            return Center(
               child: isLoginShowing
                   ? GestureDetector(
                       onTap: () {

@@ -1,14 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurdianeve/Pages/fakecall.dart';
 import 'package:gaurdianeve/Pages/mapScreen.dart';
+import 'package:gaurdianeve/Pages/messages.dart';
 import 'package:gaurdianeve/Pages/setting.dart';
 import 'package:gaurdianeve/model/user.dart';
 import '../components/appname.dart';
 import '../components/bottomnavigationTile.dart';
 import '../constants.dart';
 import 'addingGeoLocation.dart';
+import 'notification.dart';
 
 class HomeScreen extends StatefulWidget {
    HomeScreen({super.key, required this.user});
@@ -30,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const FakeCall(),
       const Center(child: Text("alert")),
       const Center(child: Text("friends")),
-      const Center(child: Text("messages")),
+      const Messages(),
   
 
 
@@ -46,7 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
-            child: SvgPicture.asset("assets/images/notification.svg"),
+            child: GestureDetector(
+              onTap:() {
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  NoficationScreen()),
+              );
+              },
+              child: SvgPicture.asset("assets/images/notification.svg")),
           ),
           const SizedBox(
             width: 37,
@@ -55,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  AddRedzoneScreen()),
+                MaterialPageRoute(builder: (context) =>   AddRedzoneScreen()),
               );
             },
             child: CircleAvatar(
