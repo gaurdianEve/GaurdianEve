@@ -33,7 +33,7 @@ class IniviteBloc extends Bloc<IniviteEvent, Invites> {
           .doc(invite.byUser)
           .collection('friend')
           .add({"friend": event.invite.reciverID}).then((value) async => {
-                  await FirebaseFirestore.instance
+                await FirebaseFirestore.instance
                     .collection('friends')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .collection('friend')

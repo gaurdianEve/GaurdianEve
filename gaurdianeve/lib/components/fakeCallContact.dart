@@ -1,61 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaurdianeve/Pages/callScreen.dart';
+import 'package:gaurdianeve/Pages/pickupScreen.dart';
+import 'package:gaurdianeve/Pages/updateFakeCallScreen.dart';
+import 'package:gaurdianeve/model/fakecontact.dart';
 
 import '../constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FakeCallContactContainer extends StatelessWidget {
-  const FakeCallContactContainer({super.key});
+  const FakeCallContactContainer({super.key, required this.contact});
+  final FakeContact contact;
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil();
     return Container(
-       padding: EdgeInsets.symmetric(horizontal: 18,vertical: 16),
-      margin: const EdgeInsets.symmetric(horizontal: 22,vertical: 16),
-       decoration: const  BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(12))
-      ),
-      child:Row(
-        
+      padding:const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Row(
         children: [
           CircleAvatar(
             radius: 32,
-            child: Image.asset("assets/images/person1.png"),
+            backgroundColor: Colors.blueAccent,
+            child: Text(
+              contact.callName[0].toUpperCase(),
+              style: GoogleFonts.poppins(fontSize: 28.sp,color: Color(0xFFFFFFFFF)),
+            ),
           ),
-          SizedBox(width: 20,),
+          const SizedBox(
+            width: 20,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("MOM",style: GoogleFonts.poppins(fontSize: 18.sp),),
-              Text("809808980",style: GoogleFonts.poppins(),),
+              Text(
+                contact.callName,
+                style: GoogleFonts.poppins(fontSize: 18.sp),
+              ),
+              Text(
+                contact.phoneNo,
+                style: GoogleFonts.poppins(),
+              ),
             ],
           ),
           Spacer(),
           Column(
-            
-
             children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundColor: teal,
-                child: SvgPicture.asset("assets/images/edit.svg"),
-
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder:(context) {
+                    return UpdateFakeCallAddScreen(firstContact: contact,);
+                  },));
+                },
+                child: CircleAvatar(
+                  radius: 16,
+                  backgroundColor: teal,
+                  child: SvgPicture.asset("assets/images/edit.svg"),
+                ),
               ),
-              SizedBox(height:16,),
-              
-              CircleAvatar(
-                backgroundColor: pink,
-                child: SvgPicture.asset("assets/images/phone.svg")
-
+              SizedBox(
+                height: 16,
               ),
-              
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder:(context) {
+                    return Calls(name: "Dad",);
+                  },));
+                },
+                child: CircleAvatar(
+                    backgroundColor: pink,
+                    child: SvgPicture.asset("assets/images/phone.svg")),
+              ),
             ],
           )
         ],
-      ) ,
+      ),
     );
   }
 }
-

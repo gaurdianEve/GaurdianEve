@@ -13,7 +13,9 @@ class LoginEvent extends AuthBLocEvent {
     required this.password,
   });
 }
-
+class CheckLogging extends AuthBLocEvent {
+  
+}
 
 
 class CreateUser extends AuthBLocEvent {

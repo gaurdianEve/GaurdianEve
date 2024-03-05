@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Authentication/bloc/auth_b_loc_bloc.dart';
 import '../constants.dart';
 
-class SignUpComponent extends StatelessWidget {
+class SignUpComponent extends StatefulWidget {
   SignUpComponent(
       {super.key,
       required this.height,
@@ -18,15 +18,31 @@ class SignUpComponent extends StatelessWidget {
   final double height;
   final double width;
   final void Function()? onTap;
+
+  @override
+  State<SignUpComponent> createState() => _SignUpComponentState();
+}
+
+class _SignUpComponentState extends State<SignUpComponent> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController userController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
+  bool isSeen = true;
+
+  void toogleIsSeen(){
+   setState(() {
+      isSeen =!isSeen;
+   });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height / 1.832,
-      width: width / 1.256,
+      height: widget.height / 1.832,
+      width: widget.width / 1.256,
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -128,7 +144,15 @@ class SignUpComponent extends StatelessWidget {
                   fillColor: const Color(0xFFF7F7F7),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: SvgPicture.asset("assets/images/password.svg"),
+                    child:isSeen? GestureDetector(
+                      onTap: (){
+                        toogleIsSeen();
+                      },
+                      child: SvgPicture.asset("assets/images/password.svg")):GestureDetector(
+                        onTap: (){
+                          toogleIsSeen();
+                        },
+                        child: SvgPicture.asset("assets/images/password_not_seen.svg")),
                   ),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -189,7 +213,7 @@ class SignUpComponent extends StatelessWidget {
               height: 5,
             ),
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: RichText(
                   textAlign: TextAlign.left,
                   text: TextSpan(children: [

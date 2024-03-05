@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gaurdianeve/components/callIcon.dart';
 import 'package:gaurdianeve/constants.dart';
+import 'package:gaurdianeve/model/fakecontact.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CallScreen extends StatelessWidget {
-  const CallScreen({super.key});
+  const CallScreen({super.key, required this.contact});
+  final FakeContact contact;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double aspectRatio = MediaQuery.of(context).size.aspectRatio;
+    ScreenUtil();
     return Scaffold(
       backgroundColor: blackD,
       body: SafeArea(
@@ -31,28 +35,28 @@ class CallScreen extends StatelessWidget {
              CircleAvatar(
               backgroundColor: Colors.amber,
               radius: 40.sp,
-              child: Image.asset("assets/images/person1.png"),
+              child: Text(contact.callName[0], style: GoogleFonts.poppins(fontSize: 42.sp, color:const  Color(0xFFFFFFFF)),),
             ),
             const SizedBox(height: 10,),
-            const Text(
-              "MOM",
+             Text(
+              contact.callName,
               textDirection: TextDirection.ltr,
-              style: TextStyle(
+              style: const TextStyle(
                 decoration: TextDecoration.none,
                 fontSize: 40.0,
                 color: Colors.white
               ),
             ),
             const SizedBox(height: 10,),
-            const Text(
-              "3424567323",
+             Text(
+              contact.phoneNo,
               textDirection: TextDirection.ltr,
-              style: TextStyle(decoration: TextDecoration.none, fontSize: 16.0,color: Colors.white),
+              style: const TextStyle(decoration: TextDecoration.none, fontSize: 16.0,color: Colors.white),
             ),
              SizedBox(height: height/12,),
              Padding(
               padding: EdgeInsets.symmetric(horizontal: width/8),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CallIcon(
@@ -73,7 +77,7 @@ class CallScreen extends StatelessWidget {
             const SizedBox(height: 30,),
              Padding(
               padding:  EdgeInsets.symmetric(horizontal: width/8),
-              child: Row(
+              child: const  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CallIcon(

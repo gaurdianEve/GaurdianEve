@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
@@ -17,7 +19,13 @@ class _AuthPageState extends State<AuthPage> {
   double height = 0.0;
   bool isLoginShowing = false;
   bool showAnimation = false;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+   
+  }
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -30,7 +38,10 @@ class _AuthPageState extends State<AuthPage> {
       try {
        WidgetsBinding.instance.addPostFrameCallback((_) {
       // Perform navigation after the build phase
-      Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+        
+      }
     });
   } catch (e) {
     

@@ -12,8 +12,11 @@ final firebase = FirebaseAuth.instance;
 
 class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
   AuthBLocBloc() : super(Unauthenticated()) {
+   
+
+
     on<LoginEvent>((event, emit) async {
-      
+      emit(Loading());
       final UserCredential userCredential =
           await firebase.signInWithEmailAndPassword(
               email: event.email, password: event.password);
@@ -23,18 +26,20 @@ class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
       DocumentReference docRef = db.collection('users').doc(user!.uid);
       DocumentSnapshot snapshot = await docRef.get();
       if (snapshot.exists) {
-        
-        final currentUser =
-            UserProfile(snapshot.get("id"), snapshot.get("avatarUrl"), snapshot.get("username"), snapshot.get("email"));
+        final currentUser = UserProfile(
+            snapshot.get("id"),
+            snapshot.get("avatarUrl"),
+            snapshot.get("username"),
+            snapshot.get("email"));
         emit(Authenticated(currentUser));
         // Use currentUser object here
       } else {
         // Document does not exist
       }
     });
-    
+
     on<CreateUser>((event, emit) async {
-      
+      emit(Loading());
       final UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: event.email, password: event.password);

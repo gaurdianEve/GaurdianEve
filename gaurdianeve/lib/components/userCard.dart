@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaurdianeve/Pages/alert.dart';
+import 'package:gaurdianeve/Pages/editInfo.dart';
+import 'package:gaurdianeve/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
@@ -9,12 +12,12 @@ class UserCard extends StatelessWidget {
   const UserCard({
     super.key,
     required this.containerHeight,
-    required this.width, this.username,
+    required this.width, required this.user,
   });
 
   final double containerHeight;
   final double width;
-  final username;
+  final UserProfile user;
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +45,22 @@ class UserCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    Text(username,
+                    Text(user.username,
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 18.sp
                         )),
-                    Text("Edit info",
-                        style: GoogleFonts.poppins(
-                          color: Colors.grey.shade500,
-                        ))
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder:(context) {
+                          return  EditInfo( user: user,);
+                        },));
+                      },
+                      child: Text("Edit info",
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey.shade500,
+                          )),
+                    )
                   ])
                 ],
               )),

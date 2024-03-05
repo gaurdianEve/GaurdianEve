@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 import 'package:gaurdianeve/Pages/mainScreen.dart';
 
+import 'FakeCall/bloc/fake_call_bloc.dart';
 import 'Invitation/bloc/inivite_bloc.dart';
 import 'firebase_options.dart';
 
@@ -32,9 +33,13 @@ void main() async {
         BlocProvider<IniviteBloc>(
           create: (context) => IniviteBloc(),
         ),
+        BlocProvider(
+          create: (context) => FakeCallBloc(),
+          child: Container(),
+        )
         // Add more BlocProviders as needed
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),);
 }
 

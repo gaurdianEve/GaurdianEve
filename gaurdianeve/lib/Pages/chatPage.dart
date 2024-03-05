@@ -48,15 +48,15 @@ void sendMessage(){
         leading: SafeArea(
           child: Row(
             children: [
-              SizedBox(width: 10,),
-              Icon(FontAwesomeIcons.chevronLeft,color: pink,),
-              SizedBox(width: 20,),
+              const SizedBox(width: 10,),
+              const Icon(FontAwesomeIcons.chevronLeft,color: pink,),
+              const SizedBox(width: 20,),
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(child: Image.asset("assets/images/person1.png"),),
               
             ),
-            SizedBox(width: 20,),
+            const SizedBox(width: 20,),
             Text(widget.recieveremail,
           style: GoogleFonts.poppins(color: pink,fontSize: 18.sp),
           ),
@@ -64,7 +64,7 @@ void sendMessage(){
           ),
         ),
         
-        backgroundColor: Color(0xFFFFEBFC),
+        backgroundColor: const Color(0xFFFFEBFC),
         elevation: 0.15,
 
         
@@ -91,7 +91,7 @@ void sendMessage(){
       stream: _chatServices.getMessages(widget.recieverUID, _firebaseAuth.currentUser!.uid),
       builder:(context, snapshot) {
         if (snapshot.hasError) {
-          return Text("Error");
+          return const Text("Error");
           
         }
         if (snapshot.connectionState==ConnectionState.waiting) {

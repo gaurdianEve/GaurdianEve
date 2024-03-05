@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:gaurdianeve/Pages/callScreen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaurdianeve/FakeCall/bloc/fake_call_bloc.dart';
 import 'package:gaurdianeve/components/fakeCallContact.dart';
 
 import '../components/fakecallContainer.dart';
 
 class FakeCall extends StatelessWidget {
   const FakeCall({super.key});
-
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    double aspectRatio = MediaQuery.of(context).size.aspectRatio;
-
+    BlocProvider.of<FakeCallBloc>(context).add(FetchFakeContacts());
     return Column(
       children: [
-        // AnimatedContainer(duration: Duration(),child:
-        // ),
         const FakeCallInstructionContainer(),
-        GestureDetector(
-          onTap: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CallScreen()),
+        BlocBuilder<FakeCallBloc, FakeCallState>(
+          builder: (context, state) {
+            if (state is FakeCallContacts) {
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: state.fakeContactList.length,
+                  itemBuilder: (context, index) {
+                    final contact = state.fakeContactList[index];
+                    return FakeCallContactContainer(contact: contact);
+                  },
+                ),
               );
+            } else {
+              return const Text('No fake contacts available');
+            }
           },
-          child: const FakeCallContactContainer())
+        ),
       ],
     );
   }

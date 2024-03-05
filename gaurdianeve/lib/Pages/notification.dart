@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,9 +32,14 @@ class _NoficationScreenState extends State<NoficationScreen> {
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
-        leading: Icon(
-          FontAwesomeIcons.chevronLeft,
-          color: teal,
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Icon(
+            FontAwesomeIcons.chevronLeft,
+            color: teal,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -52,8 +60,11 @@ class _NoficationScreenState extends State<NoficationScreen> {
               {
                 List<Invite> invites = (state as Invites).inviteList;
                 List<Widget> inTextInvites = [];
+                
                 for (var invite in invites) {
-                  inTextInvites.add(NotificationTile(invite: invite));
+                 
+                  
+                  inTextInvites.add(NotificationTile(invite: invite,));
                 }
                 return Column(children: inTextInvites);
               }

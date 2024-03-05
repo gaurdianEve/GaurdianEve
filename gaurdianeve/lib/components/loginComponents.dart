@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
-class LoginComponent extends StatelessWidget {
+class LoginComponent extends StatefulWidget {
   LoginComponent(
       {super.key,
       required this.height,
@@ -17,19 +17,36 @@ class LoginComponent extends StatelessWidget {
 
   final double height;
   final double width;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-// Add a GlobalKey for Form
-  final FocusNode _emailFocus = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
-
   final void Function()? onTap;
 
   @override
+  State<LoginComponent> createState() => _LoginComponentState();
+}
+
+class _LoginComponentState extends State<LoginComponent> {
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+// Add a GlobalKey for Form
+  final FocusNode _emailFocus = FocusNode();
+
+  final FocusNode _passwordFocus = FocusNode();
+
+  bool isSeen = true;
+
+  void toogleIsSeen(){
+   setState(() {
+      isSeen =!isSeen;
+   });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Container(
-      height: height / 1.832,
-      width: width / 1.256,
+      height: widget.height / 1.832,
+      width: widget.width / 1.256,
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -69,7 +86,7 @@ class LoginComponent extends StatelessWidget {
                   fillColor: const Color(0xFFF7F7F7),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: SvgPicture.asset("assets/images/email.svg"),
+                    child:  SvgPicture.asset("assets/images/email.svg"),
                   ),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -80,6 +97,7 @@ class LoginComponent extends StatelessWidget {
             ),
             TextField(
               controller: passwordController,
+              obscureText: isSeen,
               decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
@@ -94,11 +112,20 @@ class LoginComponent extends StatelessWidget {
                       color: Colors.black,
                       letterSpacing: 1,
                       fontSize: 12.sp),
+                  
                   filled: true,
                   fillColor: const Color(0xFFF7F7F7),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: SvgPicture.asset("assets/images/password.svg"),
+                    child:isSeen? GestureDetector(
+                      onTap: (){
+                        toogleIsSeen();
+                      },
+                      child: SvgPicture.asset("assets/images/password.svg")):GestureDetector(
+                        onTap: (){
+                          toogleIsSeen();
+                        },
+                        child: SvgPicture.asset("assets/images/password_not_seen.svg")),
                   ),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -152,7 +179,7 @@ class LoginComponent extends StatelessWidget {
               height: 5,
             ),
             GestureDetector(
-              onTap: onTap,
+              onTap: widget.onTap,
               child: RichText(
                   textAlign: TextAlign.left,
                   text: TextSpan(children: [

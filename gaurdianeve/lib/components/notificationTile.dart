@@ -12,6 +12,7 @@ class NotificationTile extends StatelessWidget {
     required this.invite,
   });
   final Invite invite;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +29,7 @@ class NotificationTile extends StatelessWidget {
             child: Image.asset("assets/images/person1.png"),
           ),
           Text(
-            invite.docID,
+            invite.senderUsername,
             style: GoogleFonts.poppins(),
           ),
           GestureDetector(
