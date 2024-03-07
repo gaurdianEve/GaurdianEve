@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(width: 37),
             CircleAvatar(
-              child: Image.asset("assets/images/person1.png"),
+              child: ClipOval(child: Image.asset("assets/images/avatars/${widget.user.avatarURL}.png")),
             ),
             const SizedBox(width: 20),
           ],

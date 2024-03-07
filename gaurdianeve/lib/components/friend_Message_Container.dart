@@ -4,8 +4,9 @@ import 'package:gaurdianeve/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FriendMessageContainer extends StatelessWidget {
-  const FriendMessageContainer({super.key, required this.username});
+  const FriendMessageContainer({super.key, required this.username, required this.avatar});
   final String username;
+  final String avatar;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,11 @@ class FriendMessageContainer extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 16.sp,
-            child: Image.asset("assets/images/person1.png"),
+          ClipOval(
+            child: CircleAvatar(
+              radius: 16.sp,
+              child: Image.asset("assets/images/avatars/${avatar}.png"),
+            ),
           ),
           const SizedBox(
             width: 10,

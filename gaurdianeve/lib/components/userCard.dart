@@ -37,7 +37,7 @@ class UserCard extends StatelessWidget {
                   CircleAvatar(
                       radius: 40,
                       child:
-                          Image.asset("assets/images/person1.png")),
+                          ClipOval(child: Image.asset("assets/images/avatars/${user.avatarURL}.png"))),
                   const SizedBox(
                     width: 30,
                   ),

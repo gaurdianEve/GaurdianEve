@@ -77,6 +77,7 @@ Widget _buildUserList() {
 
                 // Assuming you have a 'name' field in your 'users' collection
                 String friendName = snapshot.data!.get('username');
+                String avatarUrl = snapshot.data!.get('avatarUrl');
 
                 return InkWell(
                     onTap: () {
@@ -85,9 +86,11 @@ Widget _buildUserList() {
                           MaterialPageRoute(
                               builder: (context) => ChatPage(
                                   recieverUID: friendID,
-                                  recieveremail: friendName)));
+                                  recieveremail: friendName,
+                                  avatar: avatarUrl,
+                                  )));
                     },
-                    child: FriendMessageContainer(username: friendName));
+                    child: FriendMessageContainer(username: friendName, avatar: avatarUrl,));
               },
             );
           }).toList(),

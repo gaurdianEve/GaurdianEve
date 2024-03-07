@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
+
 import 'package:gaurdianeve/Pages/avatarSelectionScreen.dart';
+import 'package:gaurdianeve/components/customeSnackBar.dart';
 import 'package:gaurdianeve/constants.dart';
+import 'package:gaurdianeve/main.dart';
 import 'package:gaurdianeve/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditInfo extends StatelessWidget {
-  const EditInfo({super.key, required this.user});
+class EditInfo extends StatefulWidget {
+  EditInfo({super.key, required this.user});
   final UserProfile user;
+  TextEditingController _username = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  @override
+  State<EditInfo> createState() => _EditInfoState();
+}
+
+class _EditInfoState extends State<EditInfo> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget._username = TextEditingController(text: widget.user.username);
+
+    widget._email = TextEditingController(text: widget.user.email);
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double aspectRatio = MediaQuery.of(context).size.aspectRatio;
-    TextEditingController _username =
-        TextEditingController(text: user.username);
-    TextEditingController _email = TextEditingController(text: user.email);
 
     ScreenUtil();
     return Scaffold(
@@ -65,13 +82,13 @@ class EditInfo extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return const AvatarSelectionScreen();
+                      return  AvatarSelectionScreen(url: widget.user.avatarURL,);
                     },
                   ));
                 },
                 child: Stack(children: [
                   ClipOval(
-                      child: Image.asset("assets/images/avatars/avatar10.png")),
+                      child: Image.asset("assets/images/avatars/${widget.user.avatarURL}.png")),
                   const Positioned(
                       bottom: 1,
                       right: 1,
@@ -98,7 +115,7 @@ class EditInfo extends StatelessWidget {
               style: GoogleFonts.poppins(fontSize: 12.sp),
             ),
             TextField(
-              controller: _username,
+              controller: widget._username,
               decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
@@ -123,7 +140,7 @@ class EditInfo extends StatelessWidget {
               style: GoogleFonts.poppins(fontSize: 12.sp),
             ),
             TextField(
-              controller: _email,
+              controller: widget._email,
               decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
@@ -159,14 +176,23 @@ class EditInfo extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Row(
                 children: [
-                  Text(user.id),
+                  Text(widget.user.id),
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      Clipboard.setData(ClipboardData(text: user.id));
+                      Clipboard.setData(ClipboardData(text: widget.user.id));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Id copied'),
+                        const SnackBar(
+                          content: CustomeSnackBar(
+                            text: "Successfully Copied!",
+                            icon: Icon(
+                              FontAwesomeIcons.check,
+                              color: Color(0xFFFFFFFF),
+                            ),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Color(0x00FFFFFF),
+                          elevation: 0,
                         ),
                       );
                     },
@@ -188,12 +214,28 @@ class EditInfo extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          BlocProvider.of<AuthBLocBloc>(context).add(UpdatingUser(UserProfile(
+              widget.user.id,
+              widget.user.avatarURL,
+              widget._username.text,
+              widget._email.text)));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: CustomeSnackBar(
+              text: "Updated Info",
+              icon: Icon(
+                FontAwesomeIcons.check,
+                color: Color(0xFFFFFFFF),
+              ),
+            ),
+          ));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MyApp()),
+          );
+        },
         backgroundColor: teal,
         child: const Icon(FontAwesomeIcons.check),
       ),
     );
   }
 }
-
-void _copyToClipboard(String text) {}

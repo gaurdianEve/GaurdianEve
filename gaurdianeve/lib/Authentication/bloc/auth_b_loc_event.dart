@@ -3,8 +3,6 @@ part of 'auth_b_loc_bloc.dart';
 @immutable
 sealed class AuthBLocEvent {}
 
-
-
 class LoginEvent extends AuthBLocEvent {
   final String email;
   final String password;
@@ -13,10 +11,8 @@ class LoginEvent extends AuthBLocEvent {
     required this.password,
   });
 }
-class CheckLogging extends AuthBLocEvent {
-  
-}
 
+class CheckLogging extends AuthBLocEvent {}
 
 class CreateUser extends AuthBLocEvent {
   final String email;
@@ -27,4 +23,11 @@ class CreateUser extends AuthBLocEvent {
     required this.email,
     required this.password,
   });
+}
+
+class UpdatingUser extends AuthBLocEvent {
+  final UserProfile user;
+
+  UpdatingUser(this.user);
+  
 }

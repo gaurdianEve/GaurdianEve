@@ -12,9 +12,6 @@ final firebase = FirebaseAuth.instance;
 
 class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
   AuthBLocBloc() : super(Unauthenticated()) {
-   
-
-
     on<LoginEvent>((event, emit) async {
       emit(Loading());
       final UserCredential userCredential =
@@ -60,6 +57,14 @@ class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
         print("succesfully created User");
         emit(Authenticated(currentUser));
       }
+    });
+    on<UpdatingUser>((event, emit) {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      final db = FirebaseFirestore.instance;
+      DocumentReference docRef =
+          db.collection('users').doc(userId);
+      docRef.update({"username": event.user.username, "email": event.user.email});
+      emit(Authenticated(UserProfile(event.user.id, event.user.avatarURL, event.user.username, event.user.email)));
     });
   }
 }

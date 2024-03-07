@@ -14,10 +14,11 @@ import '../messages/chatServices.dart';
 class ChatPage extends StatefulWidget {
   final String recieverUID;
   final String recieveremail;
+  final String avatar;
   const ChatPage({
     super.key,
     required this.recieverUID,
-    required this.recieveremail
+    required this.recieveremail, required this.avatar
   });
   
   
@@ -49,11 +50,16 @@ void sendMessage(){
           child: Row(
             children: [
               const SizedBox(width: 10,),
-              const Icon(FontAwesomeIcons.chevronLeft,color: pink,),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                
+                child: const Icon(FontAwesomeIcons.chevronLeft,color: pink,)),
               const SizedBox(width: 20,),
               Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(child: Image.asset("assets/images/person1.png"),),
+              child: CircleAvatar(child: ClipOval(child: Image.asset("assets/images/avatars/${widget.avatar}.png")),),
               
             ),
             const SizedBox(width: 20,),

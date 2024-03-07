@@ -1,11 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaurdianeve/constants.dart';
+import 'package:gaurdianeve/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../components/customeSnackBar.dart';
+
 class AvatarSelectionScreen extends StatefulWidget {
-  const AvatarSelectionScreen({Key? key}) : super(key: key);
+  const AvatarSelectionScreen({Key? key, required this.url}) : super(key: key);
+  final String url;
 
   @override
   _AvatarSelectionScreenState createState() => _AvatarSelectionScreenState();
@@ -13,6 +19,14 @@ class AvatarSelectionScreen extends StatefulWidget {
 
 class _AvatarSelectionScreenState extends State<AvatarSelectionScreen> {
   String _selectedAvatarPath = "assets/images/avatars/avatar1.png";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _selectedAvatarPath = "assets/images/avatars/${widget.url}.png";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +86,32 @@ class _AvatarSelectionScreenState extends State<AvatarSelectionScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final userId = FirebaseAuth.instance.currentUser?.uid;
+          final db = FirebaseFirestore.instance;
+          DocumentReference docRef = db.collection('users').doc(userId);
+
+          String imageName = _selectedAvatarPath.split("/").last.split(".").first;
+          docRef.update({"avatarUrl": imageName});
+
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: CustomeSnackBar(
+              text: "Updated Avatar!",
+              icon: Icon(
+                FontAwesomeIcons.check,
+                color: Color(0xFFFFFFFF),
+              ),
+            ),
+          ));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MyApp()),
+          );
+        },
         backgroundColor: pink,
-        child: const Icon(FontAwesomeIcons.check,color: whiteD,),
+        child: const Icon(
+          FontAwesomeIcons.check,
+          color: whiteD,
+        ),
       ),
     );
   }

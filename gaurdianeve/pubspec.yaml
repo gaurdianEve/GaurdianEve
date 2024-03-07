@@ -51,6 +51,7 @@ dependencies:
   awesome_notifications:
   firebase_storage: ^11.6.0
   loading_animation_widget:
+  http: ^1.1.0
   
 
 flutter_native_splash:

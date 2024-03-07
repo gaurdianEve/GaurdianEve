@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaurdianeve/Pages/callScreen.dart';
-import 'package:gaurdianeve/Pages/pickupScreen.dart';
 import 'package:gaurdianeve/Pages/updateFakeCallScreen.dart';
 import 'package:gaurdianeve/model/fakecontact.dart';
 
@@ -48,7 +47,7 @@ class FakeCallContactContainer extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Column(
             children: [
               GestureDetector(
@@ -63,13 +62,13 @@ class FakeCallContactContainer extends StatelessWidget {
                   child: SvgPicture.asset("assets/images/edit.svg"),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder:(context) {
-                    return Calls(name: "Dad",);
+                    return CallScreen(contact:contact ,);
                   },));
                 },
                 child: CircleAvatar(

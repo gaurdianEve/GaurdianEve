@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gaurdianeve/model/fakecontact.dart';
 
 class Calls extends StatelessWidget {
-  const Calls({super.key, required this.name});
-  final String name;
+  const Calls({super.key, required this.contact});
+  final FakeContact contact;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +69,16 @@ class Calls extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.green,
-                      radius: 35,
-                      child: Icon(Icons.call, color: Colors.white, size: 30),
+                    InkWell(
+                      onTap: (){
+
+                      },
+
+                      child: CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 35,
+                        child: Icon(Icons.call, color: Colors.white, size: 30),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
