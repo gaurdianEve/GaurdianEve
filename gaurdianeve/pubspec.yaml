@@ -52,6 +52,7 @@ dependencies:
   firebase_storage: ^11.6.0
   loading_animation_widget:
   http: ^1.1.0
+  firebase_messaging: 
   
 
 flutter_native_splash:
