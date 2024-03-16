@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mappls_gl/mappls_gl.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../constants.dart';
+import '../../../../constants.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -36,12 +36,10 @@ class _MapScreenState extends State<MapScreen> {
     MapplsAccountManager.setAtlasClientSecret(
         "lrFxI-iSEg82z_cr0iWw5RioEeZNLCAsd5WGzVwRv_f6iJ3rrYq1n6C_AiQAw6wi1Ad7wzNYChs7c6u1G_36AyBRQQboTEVkC4MYPnNQ1vk=");
     getLocationUpdate();
-     AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
-      if(!isAllowed){
-        AwesomeNotifications().requestPermissionToSendNotifications()
-
-      }
-    });
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) => {
+          if (!isAllowed)
+            {AwesomeNotifications().requestPermissionToSendNotifications()}
+        });
   }
 
   @override
@@ -185,12 +183,10 @@ class _MapScreenState extends State<MapScreen> {
         print("alert");
         if (firstNotification) {
           triggerNotification();
-          
-          
         }
       }
       final CircleOptions circle = CircleOptions(
-          circleRadius: radius*120,
+          circleRadius: radius * 120,
           circleColor: "red",
           geometry: center,
           circleStrokeWidth: 0.1,
@@ -231,8 +227,8 @@ class _MapScreenState extends State<MapScreen> {
         actionType: ActionType.Default,
         title: 'Alert !',
         body: 'User in RED ZONE!',
+        
       ),
     );
-    
   }
 }

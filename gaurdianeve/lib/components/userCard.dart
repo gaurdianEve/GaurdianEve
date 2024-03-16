@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gaurdianeve/Pages/alert.dart';
-import 'package:gaurdianeve/Pages/editInfo.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/SettingScreen/editInfo.dart';
 import 'package:gaurdianeve/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,7 +11,8 @@ class UserCard extends StatelessWidget {
   const UserCard({
     super.key,
     required this.containerHeight,
-    required this.width, required this.user,
+    required this.width,
+    required this.user,
   });
 
   final double containerHeight;
@@ -25,8 +25,7 @@ class UserCard extends StatelessWidget {
       width: double.infinity,
       height: containerHeight,
       decoration: BoxDecoration(
-          color: containerColor,
-          borderRadius: BorderRadius.circular(18)),
+          color: containerColor, borderRadius: BorderRadius.circular(18)),
       child: Stack(
         children: [
           Positioned(
@@ -36,32 +35,35 @@ class UserCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                       radius: 40,
-                      child:
-                          ClipOval(child: Image.asset("assets/images/avatars/${user.avatarURL}.png"))),
+                      child: ClipOval(
+                          child: Image.asset(
+                              "assets/images/avatars/${user.avatarURL}.png"))),
                   const SizedBox(
                     width: 30,
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Text(user.username,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 18.sp
-                        )),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder:(context) {
-                          return  EditInfo( user: user,);
-                        },));
-                      },
-                      child: Text("Edit info",
-                          style: GoogleFonts.poppins(
-                            color: Colors.grey.shade500,
-                          )),
-                    )
-                  ])
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(user.username,
+                            style: GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 18.sp)),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return EditInfo(
+                                  user: user,
+                                );
+                              },
+                            ));
+                          },
+                          child: Text("Edit info",
+                              style: GoogleFonts.poppins(
+                                color: Colors.grey.shade500,
+                              )),
+                        )
+                      ])
                 ],
               )),
           Positioned(

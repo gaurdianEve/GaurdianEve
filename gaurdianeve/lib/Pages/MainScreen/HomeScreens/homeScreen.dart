@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gaurdianeve/Pages/alert.dart';
-import 'package:gaurdianeve/Pages/fakecall.dart';
-import 'package:gaurdianeve/Pages/mapScreen.dart';
-import 'package:gaurdianeve/Pages/messages.dart';
-import 'package:gaurdianeve/Pages/setting.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/EmergencyScreen/alert.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/fakecall.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/fallCallAddScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/MapScreen/mapScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/MessageScreen/messages.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/NotificationScreen/notification.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/SettingScreen/setting.dart';
 import 'package:gaurdianeve/model/user.dart';
-import '../components/appname.dart';
-import '../components/bottomnavigationTile.dart';
-import '../constants.dart';
-import 'fallCallAddScreen.dart';
-import 'notification.dart';
+
+import '../../../components/appname.dart';
+import '../../../components/bottomnavigationTile.dart';
+import '../../../constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.user}) : super(key: key);
@@ -24,16 +25,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentPageIndex = 1;
-  
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
-    const MapScreen(),
-    const FakeCall(),
-    const Emergency(),
-    const Messages(),
-    Setting(user: widget.user)
-  ];
+      const MapScreen(),
+      const FakeCall(),
+      const Emergency(),
+      const Messages(),
+      Setting(user: widget.user)
+    ];
     return Scaffold(
         backgroundColor: scaffoldBackgroundColor,
         appBar: AppBar(
@@ -56,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(width: 37),
             CircleAvatar(
-              child: ClipOval(child: Image.asset("assets/images/avatars/${widget.user.avatarURL}.png")),
+              child: ClipOval(
+                  child: Image.asset(
+                      "assets/images/avatars/${widget.user.avatarURL}.png")),
             ),
             const SizedBox(width: 20),
           ],
@@ -108,20 +111,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButton: IndexedStack(
-          index: _currentPageIndex==1?0:1,
+          index: _currentPageIndex == 1 ? 0 : 1,
           children: [
             FloatingActionButton(
                 backgroundColor: teal,
                 onPressed: () {
-                 Navigator.push(context,MaterialPageRoute(builder:(context) {
-                  return  const FakeCallAddScreen();
-                 }, ));
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const FakeCallAddScreen();
+                    },
+                  ));
                 },
                 child: Icon(
                   FontAwesomeIcons.plus,
                   color: Color(0xFFFFFFFF),
                 )),
-                SizedBox(width: 0,height: 0,),
+            SizedBox(
+              width: 0,
+              height: 0,
+            ),
           ],
         ));
   }

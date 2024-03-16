@@ -5,11 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 import 'package:gaurdianeve/service/emailVerification.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../constants.dart';
 
 class LoginComponent extends StatefulWidget {
-  LoginComponent(
+  const LoginComponent(
       {super.key,
       required this.height,
       required this.width,
@@ -29,21 +30,17 @@ class _LoginComponentState extends State<LoginComponent> {
   TextEditingController passwordController = TextEditingController();
 
 // Add a GlobalKey for Form
-  final FocusNode _emailFocus = FocusNode();
-
-  final FocusNode _passwordFocus = FocusNode();
 
   bool isSeen = true;
 
-  void toogleIsSeen(){
-   setState(() {
-      isSeen =!isSeen;
-   });
+  void toogleIsSeen() {
+    setState(() {
+      isSeen = !isSeen;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: widget.height / 1.832,
       width: widget.width / 1.256,
@@ -86,7 +83,7 @@ class _LoginComponentState extends State<LoginComponent> {
                   fillColor: const Color(0xFFF7F7F7),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child:  SvgPicture.asset("assets/images/email.svg"),
+                    child: SvgPicture.asset("assets/images/email.svg"),
                   ),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -112,20 +109,23 @@ class _LoginComponentState extends State<LoginComponent> {
                       color: Colors.black,
                       letterSpacing: 1,
                       fontSize: 12.sp),
-                  
                   filled: true,
                   fillColor: const Color(0xFFF7F7F7),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child:isSeen? GestureDetector(
-                      onTap: (){
-                        toogleIsSeen();
-                      },
-                      child: SvgPicture.asset("assets/images/password.svg")):GestureDetector(
-                        onTap: (){
-                          toogleIsSeen();
-                        },
-                        child: SvgPicture.asset("assets/images/password_not_seen.svg")),
+                    child: isSeen
+                        ? GestureDetector(
+                            onTap: () {
+                              toogleIsSeen();
+                            },
+                            child:
+                                SvgPicture.asset("assets/images/password.svg"))
+                        : GestureDetector(
+                            onTap: () {
+                              toogleIsSeen();
+                            },
+                            child: SvgPicture.asset(
+                                "assets/images/password_not_seen.svg")),
                   ),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
@@ -166,16 +166,26 @@ class _LoginComponentState extends State<LoginComponent> {
                     color: pink,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 child: Center(
-                    child: Text(
-                  "Sign In",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400),
-                )),
+                  child: BlocBuilder<AuthBLocBloc, AuthBLocState>(
+                    builder: (context, state) {
+                      if (state is Loading) {
+                        return LoadingAnimationWidget.waveDots(
+                            color: whiteD, size: 25);
+                      } else {
+                        return Text(
+                          "Sign In",
+                          style: GoogleFonts.poppins(
+                              fontSize: 18.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400),
+                        );
+                      }
+                    },
+                  ),
+                ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             GestureDetector(
@@ -184,14 +194,14 @@ class _LoginComponentState extends State<LoginComponent> {
                   textAlign: TextAlign.left,
                   text: TextSpan(children: [
                     TextSpan(
-                        text: "Already have Account",
+                        text: "Don't have Account",
                         style: GoogleFonts.getFont("Poppins",
                             color: Colors.black,
                             fontWeight: FontWeight.w200,
                             fontSize: 12.sp,
                             letterSpacing: 0.5)),
                     TextSpan(
-                        text: " Log in",
+                        text: " Sign in",
                         style: GoogleFonts.poppins(
                             color: teal,
                             fontSize: 12.sp,

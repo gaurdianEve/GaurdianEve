@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/FakeCall/bloc/fake_call_bloc.dart';
 import 'package:gaurdianeve/components/fakeCallContact.dart';
 
-import '../components/fakecallContainer.dart';
+import '../../../../components/fakecallContainer.dart';
 
 class FakeCall extends StatelessWidget {
   const FakeCall({super.key});

@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaurdianeve/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/bubble.dart';
-import '../messages/chatServices.dart';
+import '../../../../components/bubble.dart';
+import '../../../../messages/chatServices.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,18 +30,27 @@ class _ChatPageState extends State<ChatPage> {
   final _firebaseAuth = FirebaseAuth.instance;
   final _chatTextController = TextEditingController();
 
-  Future<void> sendMessage() async {
-    if (_chatTextController.text.isNotEmpty) {
-      _chatServices.sendMessages(widget.recieverUID, _chatTextController.text);
-      FirebaseMessaging messaging = FirebaseMessaging.instance;
-      await messaging.getToken().then((value) =>{
-        sendNotification(value!, "hello", "sarvar")
-      } );
-      
-      
-      _chatTextController.clear();
+Future<void> sendMessage() async {
+  if (_chatTextController.text.isNotEmpty) {
+    _chatServices.sendMessages(widget.recieverUID, _chatTextController.text);
+    // Get the receiver's token from Firestore
+    final receiverToken = await _getReceiverToken(widget.recieverUID);
+    if (receiverToken != null) {
+      sendNotification(receiverToken, "Message from ${widget.recieveremail}", _chatTextController.text);
     }
+    _chatTextController.clear();
   }
+}
+
+Future<String?> _getReceiverToken(String receiverUID) async {
+  final userDoc = await FirebaseFirestore.instance.collection('users').doc(receiverUID).get();
+  if (userDoc.exists) {
+    final userData = userDoc.data() as Map<String, dynamic>;
+    return userData['token'] as String?;
+  }
+  return null;
+}
+
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:gaurdianeve/constants.dart';
 import 'package:gaurdianeve/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../components/customeSnackBar.dart';
+import '../../../../components/customeSnackBar.dart';
 
 class AvatarSelectionScreen extends StatefulWidget {
   const AvatarSelectionScreen({Key? key, required this.url}) : super(key: key);

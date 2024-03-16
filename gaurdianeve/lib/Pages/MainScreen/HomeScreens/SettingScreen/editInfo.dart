@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 
-import 'package:gaurdianeve/Pages/avatarSelectionScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/SettingScreen/avatarSelectionScreen.dart';
 import 'package:gaurdianeve/components/customeSnackBar.dart';
 import 'package:gaurdianeve/constants.dart';
 import 'package:gaurdianeve/main.dart';

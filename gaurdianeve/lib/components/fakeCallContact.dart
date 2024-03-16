@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gaurdianeve/Pages/callScreen.dart';
-import 'package:gaurdianeve/Pages/updateFakeCallScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/callScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/updateFakeCallScreen.dart';
 import 'package:gaurdianeve/model/fakecontact.dart';
 
 import '../constants.dart';

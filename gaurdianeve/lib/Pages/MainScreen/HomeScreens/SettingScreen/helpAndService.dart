@@ -120,7 +120,7 @@ class Questions extends StatelessWidget {
       children: [
         Text(
           question,
-          style: const TextStyle(color: grey, fontSize: 14),
+          style: const TextStyle(color: grey, fontSize: 16),
         ),
         const SizedBox(
           height: 14,

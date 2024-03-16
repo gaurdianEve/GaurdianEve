@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaurdianeve/FakeCall/bloc/fake_call_bloc.dart';
-import 'package:gaurdianeve/Pages/fakecall.dart';
 import 'package:gaurdianeve/constants.dart';
 import 'package:gaurdianeve/model/fakecontact.dart';
 import 'package:google_fonts/google_fonts.dart';

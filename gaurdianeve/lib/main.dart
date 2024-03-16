@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
-import 'package:gaurdianeve/Pages/mainScreen.dart';
+import 'package:gaurdianeve/Pages/MainScreen/mainScreen.dart';
 import 'FakeCall/bloc/fake_call_bloc.dart';
 import 'Invitation/bloc/inivite_bloc.dart';
 import 'firebase_options.dart';
@@ -14,22 +14,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
 
-  if (message.notification != null) {
+  print(message.notification!.title);
 
-     AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        channelKey: 'basic_channel',
-        actionType: ActionType.Default,
-        title: message.notification!.title,
-        body: message.notification!.body,
-      ),
-    );
-    
-  }
-  else{
-    print(message.notification!.title);
-  }
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 10,
+      channelKey: 'basic_channel',
+      actionType: ActionType.Default,
+      title: message.notification!.title,
+      body: message.notification!.body,
+    ),
+  );
 }
 
 void main() async {
@@ -49,7 +44,7 @@ void main() async {
   );
 
   AwesomeNotifications().initialize(
-      null,
+     null,
       [
         NotificationChannel(
           channelGroupKey: 'basic_channel_group',
@@ -60,6 +55,7 @@ void main() async {
       ],
       debug: true);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  
   runApp(
     MultiBlocProvider(
       providers: [
