@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/MessageScreen/chatPage.dart';
 import 'package:gaurdianeve/components/friend_Message_Container.dart';
-import 'package:gaurdianeve/components/lazyReload.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 

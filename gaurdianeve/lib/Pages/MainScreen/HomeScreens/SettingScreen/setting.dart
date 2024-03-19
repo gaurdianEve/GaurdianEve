@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
 import 'package:gaurdianeve/Invitation/bloc/inivite_bloc.dart';
@@ -20,6 +19,9 @@ import 'package:gaurdianeve/model/invite.dart';
 import 'package:gaurdianeve/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../components/userCard.dart';
+
+import 'package:http/http.dart' as http;
+
 
 class Setting extends StatelessWidget {
   const Setting({super.key, required this.user});
@@ -170,6 +172,7 @@ class Setting extends StatelessWidget {
                                         ),
                                       ));
                                     }
+                                    print("in send messg");
                                   },
                                   child: Container(
                                     height: 45,
@@ -215,4 +218,6 @@ class Setting extends StatelessWidget {
       ),
     );
   }
+  
+
 }

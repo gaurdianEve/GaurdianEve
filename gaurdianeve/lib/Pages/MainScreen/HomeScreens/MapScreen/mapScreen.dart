@@ -18,11 +18,13 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   MapplsMapController? mapController;
-  Location _locationController = Location();
-  // double lat = 28.6445;
-  // double longi = 77.2326;
-  LatLng initialLocation = LatLng(28.6445, 77.2326);
+
+  final Location _locationController = Location();
+
+  LatLng initialLocation = const LatLng(28.6445, 77.2326);
+
   Set<CircleOptions> redzoneCircles = {};
+
   bool firstNotification = true;
 
   @override
@@ -227,7 +229,6 @@ class _MapScreenState extends State<MapScreen> {
         actionType: ActionType.Default,
         title: 'Alert !',
         body: 'User in RED ZONE!',
-        
       ),
     );
   }

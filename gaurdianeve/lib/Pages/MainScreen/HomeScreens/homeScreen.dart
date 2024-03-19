@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/EmergencyScreen/alert.dart';
+import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/EmergencyScreen/Emergency_.dart';
 import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/fakecall.dart';
 import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/FakeCallScreen/fallCallAddScreen.dart';
 import 'package:gaurdianeve/Pages/MainScreen/HomeScreens/MapScreen/mapScreen.dart';
@@ -122,11 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ));
                 },
-                child: Icon(
+                child: const Icon(
                   FontAwesomeIcons.plus,
                   color: Color(0xFFFFFFFF),
                 )),
-            SizedBox(
+            const SizedBox(
               width: 0,
               height: 0,
             ),
