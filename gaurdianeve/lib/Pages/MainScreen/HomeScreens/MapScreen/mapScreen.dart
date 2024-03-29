@@ -222,14 +222,28 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void triggerNotification() {
-    AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        channelKey: 'basic_channel',
-        actionType: ActionType.Default,
-        title: 'Alert !',
-        body: 'User in RED ZONE!',
-      ),
-    );
+    AwesomeNotifications().setChannel(
+    NotificationChannel(
+      playSound: true, // Enable sound for this channel
+      enableVibration: true,
+      defaultRingtoneType: DefaultRingtoneType.Notification,
+      channelGroupKey: 'basic_channel_group',
+      channelKey: 'noti',
+      channelName: 'Basic notifications',
+      channelDescription: 'Notification channel for basic tests',
+    ),
+  );
+
+  // Create and send the notification
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 10,
+      channelKey: 'noti',
+      criticalAlert: true,
+      actionType: ActionType.Default,
+      title: 'Alert!',
+      body: 'User in RED ZONE!',
+    ),
+  );
   }
 }

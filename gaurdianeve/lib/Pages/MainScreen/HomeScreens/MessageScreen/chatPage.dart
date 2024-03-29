@@ -168,7 +168,7 @@ Future<String?> _getReceiverToken(String receiverUID) async {
 
 Future<void> sendNotification(String token, String title, String body) async {
   final url =
-      'https://gregarious-dasik-bbe218.netlify.app/.netlify/functions/sendNotification';
+      'https://gregarious-dasik-bbe218.netlify.app/.netlify/functions/sendNoti';
   final headers = {
     'Content-Type': 'application/json',
   };

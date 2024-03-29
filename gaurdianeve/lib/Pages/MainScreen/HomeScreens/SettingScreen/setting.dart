@@ -20,7 +20,6 @@ import 'package:gaurdianeve/model/user.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../components/userCard.dart';
 
-import 'package:http/http.dart' as http;
 
 
 class Setting extends StatelessWidget {

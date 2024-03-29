@@ -1,4 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 }
 
+void updateTokenInFirestore(String newToken) {
+  // Update the token in Firestore for the current user
+  // For example:
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({
+    'token': newToken,
+  });
+  // stream: FirebaseAuth.instance.authStateChanges().first.then((value) => {value.}),
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -44,9 +58,11 @@ void main() async {
   );
 
   AwesomeNotifications().initialize(
-     null,
+      null,
       [
         NotificationChannel(
+          playSound: true,
+          defaultRingtoneType: DefaultRingtoneType.Alarm,
           channelGroupKey: 'basic_channel_group',
           channelKey: 'basic_channel',
           channelName: 'Basic notifications',
@@ -54,8 +70,9 @@ void main() async {
         )
       ],
       debug: true);
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(
     MultiBlocProvider(
       providers: [

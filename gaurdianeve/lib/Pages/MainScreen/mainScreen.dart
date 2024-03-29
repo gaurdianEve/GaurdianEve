@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaurdianeve/Authentication/bloc/auth_b_loc_bloc.dart';
@@ -18,6 +19,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.onTokenRefresh.listen((String? token) {
+      updateTokenInFirestore(token!); // Update token when token is refreshed
+    });
     checkLoginStatus();
   }
 
@@ -55,5 +60,4 @@ void updateTokenInFirestore(String newToken) {
       .update({
     'token': newToken,
   });
-  // stream: FirebaseAuth.instance.authStateChanges().first.then((value) => {value.}),
 }

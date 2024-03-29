@@ -59,6 +59,9 @@ flutter_native_splash:
   android: true
   color: '#FBEBFB'
   image: "assets/images/logo.png"
+  android_12:
+    image: assets/logo_12.png
+    icon_background_color: "#FBEBFB"
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +70,7 @@ dev_dependencies:
 
 flutter_launcher_icons:
   android: "true"
-  image_path: "assets/icon__app.png"
+  image_path: "assets/logo__app.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -92,7 +95,7 @@ flutter:
     - assets/images/emoji/
     - assets/images/avatars/
     - assets/images/
-    - assets/icon__app.png
+    - assets/logo__app.png
     
     
   #   - images/a_dot_ham.jpeg
