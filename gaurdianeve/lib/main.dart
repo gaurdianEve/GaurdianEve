@@ -11,6 +11,7 @@ import 'FakeCall/bloc/fake_call_bloc.dart';
 import 'Invitation/bloc/inivite_bloc.dart';
 import 'firebase_options.dart';
 
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -84,7 +85,6 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => FakeCallBloc(),
-          child: Container(),
         )
         // Add more BlocProviders as needed
       ],

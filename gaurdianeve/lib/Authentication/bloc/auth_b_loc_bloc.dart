@@ -75,7 +75,7 @@ class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
         DocumentReference docRef = db.collection('users').doc(userID);
         docRef.set({
           "id": user!.uid,
-          "email": user!.email,
+          "email": user.email,
           "username": event.username,
           "avatarUrl": "avatar1",
           "token": token
@@ -128,6 +128,7 @@ class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
         final db = FirebaseFirestore.instance;
         DocumentReference docRef = db.collection('users').doc(user!.uid);
         DocumentSnapshot snapshot = await docRef.get();
+        
         if (snapshot.exists) {
           final currentUser = UserProfile(
               snapshot.get("id"),
@@ -143,5 +144,6 @@ class AuthBLocBloc extends Bloc<AuthBLocEvent, AuthBLocState> {
         emit(Unauthenticated());
       }
     });
+    
   }
 }

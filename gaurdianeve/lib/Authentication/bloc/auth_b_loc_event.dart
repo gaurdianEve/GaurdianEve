@@ -29,9 +29,6 @@ class UpdatingUser extends AuthBLocEvent {
   final UserProfile user;
 
   UpdatingUser(this.user);
-  
 }
 
-class SignOut extends AuthBLocEvent{
-
-}
+class SignOut extends AuthBLocEvent {}
